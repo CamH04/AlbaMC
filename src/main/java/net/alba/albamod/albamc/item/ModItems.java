@@ -2,19 +2,23 @@ package net.alba.albamod.albamc.item;
 import net.alba.albamod.albamc.Albamc;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
+import java.util.function.Function;
+
+
 public class ModItems {
-    public static final Item BARN_OWL_FEATHER = registerItem("barn_owl_feather", new Item(new Item.Settings()));
+    private ModItems(){}
+    public static final Item BARN_OWL_FEATHER = register("barn_owl_feather", Item::new, new Item.Settings());
 
-    private static Item registerItem(String name, Item item) {
-        return Registry.register(Registries.ITEM, Identifier.of(Albamc.MOD_ID, name), item);
+    public static Item register(String path, Function<Item.Settings, Item> factory, Item.Settings settings) {
+        final RegistryKey<Item> registryKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of("albamc", path));
+        return Items.register(registryKey, factory, settings);
     }
-
-
     public static void registerModItems() {
         Albamc.LOGGER.info("Registering Mod Items for " + Albamc.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
