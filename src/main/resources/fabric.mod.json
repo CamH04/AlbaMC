@@ -1,25 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "albamc",
+  "id": "albamod",
   "version": "${version}",
-  "name": "albaMC",
-  "description": "",
-  "authors": [],
-  "contact": {},
-  "license": "All-Rights-Reserved",
-  "icon": "assets/albamc/icon.png",
+  "name": "AlbaMod",
+  "description": "A mod made by an OS developer (Alba / CamH04) to learn minecraft modding",
+  "authors": [
+    "Alba"
+  ],
+  "contact": {
+    "homepage": "https://camhdeveloper.netlify.app/",
+    "sources": "https://github.com/CamH04"
+  },
+
+  "license": "MIT",
+
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "net.alba.albamod.albamc.client.AlbamcClient"
-    ],
-    "main": [
-      "net.alba.albamod.albamc.Albamc"
-    ]
+    "client": ["net.alba.albamod.albamc.client.AlbamcClient"],
+    "main": ["net.alba.albamod.albamc.Albamc"]
   },
+
   "mixins": [
     "albamc.mixins.json"
   ],
+
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
