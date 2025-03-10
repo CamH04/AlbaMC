@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "albamc",
+  "version": "${version}",
+  "name": "albaMC",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/albamc/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.alba.albamod.albamc.client.AlbamcClient"
+    ],
+    "main": [
+      "net.alba.albamod.albamc.Albamc"
+    ]
+  },
+  "mixins": [
+    "albamc.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
