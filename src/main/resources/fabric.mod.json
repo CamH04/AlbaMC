@@ -17,7 +17,9 @@
   "environment": "*",
   "entrypoints": {
     "client": ["net.alba.albamod.albamc.client.AlbamcClient"],
-    "main": ["net.alba.albamod.albamc.Albamc"]
+    "main": [
+      "net.alba.albamod.albamc.Albamc"
+    ]
   },
 
   "mixins": [

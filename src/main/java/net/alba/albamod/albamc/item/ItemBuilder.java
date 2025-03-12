@@ -16,6 +16,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
+
+/*
+* NO MINE : THATROBIN ITEM BUILDER
+* */
 public class ItemBuilder<T extends Item> {
     private final Identifier id;
     private final List<RegistryKey<ItemGroup>> itemGroups = new LinkedList<>();
@@ -26,7 +30,7 @@ public class ItemBuilder<T extends Item> {
     }
 
     ItemBuilder(String name) {
-        this.id = Albamc.identifier(name);  // Uses Albamc.identifier() to get the mod ID
+        this.id = Albamc.identifier(name);
     }
 
     @SafeVarargs
