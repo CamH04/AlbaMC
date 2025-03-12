@@ -1,5 +1,6 @@
 package net.alba.albamod.albamc.item;
 import net.alba.albamod.albamc.Albamc;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.EquippableComponent;
 import net.minecraft.item.equipment.EquipmentAssetKeys;
@@ -21,8 +22,9 @@ public class ModItems {
             .withSettings(settings -> settings.maxCount(64))
             .buildAndRegister();
     public static final Item BARN_OWL_WINGS = new ItemBuilder<Item>("barn_owl_wings")
-            .setItemGroup(ItemGroups.INGREDIENTS)
-            .withSettings(settings -> settings.maxCount(1)
+            .setItemGroup(ItemGroups.COMBAT)
+            .withSettings(
+                    settings -> settings.maxCount(1)
                     .rarity(Rarity.EPIC)
                     .component(
                             DataComponentTypes.GLIDER,
@@ -32,19 +34,20 @@ public class ModItems {
                             DataComponentTypes.EQUIPPABLE,
                             EquippableComponent.builder(EquipmentSlot.CHEST)
                                     .equipSound(SoundEvents.ITEM_ARMOR_EQUIP_ELYTRA)
-                                    .model(ModReg.BARN_OWL_WINGS)
-                                    //.model("albamod:item/barn_owl_wings")
+                                    .model(ModReg.BARN_OWL_WINGS_KEY)
+                                    //.model(ModReg.ELYTRA)
                                     .damageOnHurt(false)
                                     .build()
                     )
                     .repairable(BARN_OWL_FEATHER)
             )
             .buildAndRegister();
+
     //region REGISTRY ====================================================================================
     //endregion
     public static void registerModItems() {
         Albamc.LOGGER.info("Registering Mod Items for " + Albamc.MOD_ID);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
             entries.add(BARN_OWL_FEATHER);
             entries.add(BARN_OWL_WINGS);
         });
