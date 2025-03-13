@@ -25,7 +25,7 @@ public class ModItems {
             .setItemGroup(ItemGroups.COMBAT)
             .withSettings(
                     settings -> settings.maxCount(1)
-                    .rarity(Rarity.EPIC)
+                    .rarity(Rarity.RARE)
                     .component(
                             DataComponentTypes.GLIDER,
                             Unit.INSTANCE
@@ -35,7 +35,6 @@ public class ModItems {
                             EquippableComponent.builder(EquipmentSlot.CHEST)
                                     .equipSound(SoundEvents.ITEM_ARMOR_EQUIP_ELYTRA)
                                     .model(ModReg.BARN_OWL_WINGS_KEY)
-                                    //.model(ModReg.ELYTRA)
                                     .damageOnHurt(false)
                                     .build()
                     )
