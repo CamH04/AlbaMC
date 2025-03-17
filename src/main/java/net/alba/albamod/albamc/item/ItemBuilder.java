@@ -18,7 +18,7 @@ import java.util.function.Function;
 
 
 /*
-* NO MINE : THATROBIN ITEM BUILDER
+* NOT MINE : THATROBIN ITEM BUILDER
 * */
 public class ItemBuilder<T extends Item> {
     private final Identifier id;

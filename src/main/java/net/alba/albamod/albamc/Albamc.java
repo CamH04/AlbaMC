@@ -1,4 +1,5 @@
 package net.alba.albamod.albamc;
+import net.alba.albamod.albamc.entity.ModEntitys;
 import net.alba.albamod.albamc.item.ModItems;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -15,7 +16,9 @@ public class Albamc implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Hello Fabric world!");
         ModItems.registerModItems();
+        ModEntitys.registerModEntitys();
     }
+
+
 }

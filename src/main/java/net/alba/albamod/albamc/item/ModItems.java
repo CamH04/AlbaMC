@@ -1,9 +1,7 @@
 package net.alba.albamod.albamc.item;
 import net.alba.albamod.albamc.Albamc;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.EquippableComponent;
-import net.minecraft.item.equipment.EquipmentAssetKeys;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
@@ -34,7 +32,7 @@ public class ModItems {
                             DataComponentTypes.EQUIPPABLE,
                             EquippableComponent.builder(EquipmentSlot.CHEST)
                                     .equipSound(SoundEvents.ITEM_ARMOR_EQUIP_ELYTRA)
-                                    .model(ModReg.BARN_OWL_WINGS_KEY)
+                                    .model(ModItemReg.BARN_OWL_WINGS_KEY)
                                     .damageOnHurt(false)
                                     .build()
                     )
