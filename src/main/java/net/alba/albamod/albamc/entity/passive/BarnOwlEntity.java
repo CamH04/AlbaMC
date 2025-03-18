@@ -37,7 +37,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
-public class BarnOwlEntity extends TameableShoulderEntity implements Flutterer {
+public class BarnOwlEntity extends ParrotEntity implements Flutterer {
     public float flapProgress;
     public float maxWingDeviation;
     public float prevMaxWingDeviation;
@@ -227,7 +227,7 @@ public class BarnOwlEntity extends TameableShoulderEntity implements Flutterer {
     public boolean isBreedingItem(ItemStack stack) {
         return false;
     }
-    public static boolean canSpawn(EntityType<BarnOwlEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawn(EntityType<ParrotEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return world.getBlockState(pos.down()).isIn(BlockTags.PARROTS_SPAWNABLE_ON) && isLightLevelValidForNaturalSpawn(world, pos);
     }
     @Override
