@@ -5,6 +5,6 @@ import net.alba.albamod.albamc.entity.render.BarnOwlEntityRenderer;
 
 public class ModRenderer {
     public static void RenderModsLol(){
-        EntityRendererRegistry.register(ModEntitys.BARN_OWL_ENTITY, BarnOwlEntityRenderer::new);
+        //EntityRendererRegistry.register(ModEntitys.BARN_OWL_ENTITY, BarnOwlEntityRenderer::new);
     }
 }

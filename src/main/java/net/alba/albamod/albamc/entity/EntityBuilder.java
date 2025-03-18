@@ -1,8 +1,13 @@
 package net.alba.albamod.albamc.entity;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
+import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -35,6 +40,7 @@ public class EntityBuilder<T extends Entity> {
     private Function<EntityType.Builder<?>,EntityType.Builder<?>> entitySettings = (builder) -> builder;
     private SpawnGroup spawnGroup;
     private DefaultAttributeContainer.Builder attributeContainer;
+    private Function<EntityRendererFactory.Context, EntityRenderer> entityRendererFactory;
 
     private Item.Settings itemSettings = new Item.Settings();
     private final List<RegistryKey<ItemGroup>> itemGroups = new LinkedList<>();
@@ -53,11 +59,6 @@ public class EntityBuilder<T extends Entity> {
 
     public EntityBuilder(String namespace) {
         this.namespace = namespace;
-    }
-
-    public final EntityBuilder<T> setSpawnGroup() {
-        // Add the items to the list of item groups
-        return this;
     }
 
     @SafeVarargs
@@ -85,6 +86,11 @@ public class EntityBuilder<T extends Entity> {
         return this;
     }
 
+    public EntityBuilder<T> withEntityRendererFactory(Function<EntityRendererFactory.Context, EntityRenderer> entityRendererFactory) {
+        this.entityRendererFactory = entityRendererFactory;
+        return this;
+    }
+
     public EntityBuilder<T> withAttributeContainer(DefaultAttributeContainer.Builder attributeContainer) {
         this.attributeContainer = attributeContainer;
         return this;
@@ -95,10 +101,10 @@ public class EntityBuilder<T extends Entity> {
         RegistryKey<EntityType<?>> entityKey = RegistryKey.of(RegistryKeys.ENTITY_TYPE, this.id);
 
         // Create and register the block
-        EntityType<?> entityType = this.entitySettings.apply(EntityType.Builder.create(entityFunction, this.spawnGroup)).dropsNothing().makeFireImmune().dimensions(.98F, .98F).eyeHeight(0.15F).maxTrackingRange(10).trackingTickInterval(10).build(entityKey);
+        EntityType<? extends Entity> entityType = this.entitySettings.apply(EntityType.Builder.create(entityFunction, this.spawnGroup)).dropsNothing().makeFireImmune().dimensions(.98F, .98F).eyeHeight(0.15F).maxTrackingRange(10).trackingTickInterval(10).build(entityKey);
 
         if(entityTypeClass != null && MobEntity.class.isAssignableFrom(entityTypeClass)) {
-            RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, this.id);
+            RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, this.id.withPath((string) -> string + "_spawn_egg"));
             this.itemSettings.registryKey(itemKey);
             SpawnEggItem spawnEggItem = new SpawnEggItem((EntityType<? extends MobEntity>) entityType, this.itemSettings);
             Registry.register(Registries.ITEM, itemKey, spawnEggItem);
@@ -110,10 +116,16 @@ public class EntityBuilder<T extends Entity> {
             }
         }
 
+        Registry.register(Registries.ENTITY_TYPE, entityKey, entityType);
+
         if(this.attributeContainer != null && LivingEntity.class.isAssignableFrom(entityTypeClass)) {
             FabricDefaultAttributeRegistry.register((EntityType<? extends LivingEntity>) entityType, this.attributeContainer);
         }
 
-        return (EntityType<T>) Registry.register(Registries.ENTITY_TYPE, entityKey, entityType);
+        if(FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
+            EntityRendererRegistry.register((EntityType<T>) entityType, (ctx) -> this.entityRendererFactory.apply(ctx));
+        }
+
+        return (EntityType<T>) entityType;
     }
 }
